@@ -1,0 +1,186 @@
+<div class="container">
+  <h1 class="text-center">Add New Project</h1>
+  <br>
+  <form #project="ngForm">
+    <div class="form-group">
+      <h2>Main details</h2>
+      <div class="row">
+        <div class="col col-lg-3">
+          <label for="name">Project name</label>
+          <input [(ngModel)]="newProject.name" type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="col col-lg-3">
+          <label for="projectleader">Project leader</label>
+          <input [(ngModel)]="newProject.projectleader" type="text" class="form-control" id="projectleader" name="projectleader" required>
+        </div>
+        <div class="col col-lg-2">
+          <label for="company">Company</label>
+          <input [(ngModel)]="newProject.company" type="text" class="form-control" id="company" name="company" required>
+        </div>
+        <div class="col col-lg-2">
+          <label for="risk ">Probability of start</label>
+          <input [(ngModel)]="newProject.risk" type="number" placeholder="%" min="0 " max="100 " class="form-control " id="risk " name>
+        </div>
+        <div class="col col-lg-2">
+          <label for="risk ">Budget:</label>
+          <input [(ngModel)]="newProject.budget" type="number " min="0 " max="100 " class="form-control " id="budget " name="budget">
+        </div>
+      </div>
+    </div>
+    <hr>
+
+    <div class="form-group" style="margin-bottom:50px; margin-top:25px">
+      <div class="row ">
+
+        <div class="col col-lg-12">
+          <h2>Schedule resources</h2>
+        </div>
+        <div class="col col-lg-12">
+          <b>Please select how many resources you need for this project from each resource on each week.</b>
+        </div>
+
+        <div class="col col-lg-12" style="margin-top:20px">
+          <div class="row">
+            <div class="col col-lg-4">
+              <label for="startdate">Start date (week):</label>
+              <input [(ngModel)]="newProject.startdate" type="number" placeholder="First week" step="1" min="1" max="52" class="form-control"
+                id="startdate" name="startdate">
+              <div class="alert alert-danger" *ngIf="newProject.startdate >53">
+                Value should be between 1 and 52/53!
+              </div>
+            </div>
+            <div class="col col-lg-4">
+              <label for="duedate">Due date (week):</label>
+              <input [(ngModel)]="newProject.duedate" type="number" placeholder="Last Week" step="1" min="1" max="52" class="form-control"
+                id="duedate" name="duedate">
+              <div class="alert alert-danger" *ngIf="newProject.duedate >53">
+                Value should be between 1 and 52/53!
+              </div>
+            </div>
+            <div class="col col-lg-4">
+              <label for="plannedhours">Planned hours:</label>
+              <input [(ngModel)]="newProject.plannedhours" type="number" placeholder="Planned hours" step="1" min="0" max="1000" class="form-control"
+                id="plannedhours" name="plannedhours" value="">
+              <div class="alert alert-danger" *ngIf="newProject.plannedhours >1000">
+                Value is too high!
+              </div>
+            </div>
+            <div class="col col-lg-4 text-center" style="width:100%; margin-top:30px">
+              <select class="custom-select mb-2 mr-sm-2 mb-sm-0" name="skillselect" id="skillselect">
+                <option value="C">C</option>
+                <option value="C++">C++</option>
+                <option value="C#">C#</option>
+                <option value="Java">Java</option>
+                <option value="JavaScript">JavaScript</option>
+                <option value="HTML">HTML</option>
+                <option value="CSS">CSS</option>
+                <option value="Bootstrap">Bootstrap</option>
+              </select>
+            </div>
+            <div class="col col-lg-1 text-center " style="width:100%; margin-top:30px">
+              <button type="button" class="btn btn-primary" (click)="onPlus(project)">+</button>
+            </div>
+            <div class="col col-lg-1 text-center" style="width:100%; margin-top:30px">
+              <input [(ngModel)]="resourceCount" type="number" placeholder="Count" step="1" min="1" max="52" class="form-control text-center"
+                id="resourceCount" name="resourceCount">
+            </div>
+            <div class="col col-lg-1 text-center" style="width:100%; margin-top:30px">
+              <button type="button" class="btn btn-primary" (click)="onMinus(project)">-</button>
+            </div>
+            <div class="col col-lg-4 text-center" style="width:100%; margin-top:30px">
+              <button type="button" class="btn btn-warning" (click)="onAddSkill(project)">Set skill</button>
+            </div>
+            <div class="col col-lg-2" style="width:100%; margin-top:30px">
+              <h2>Skills</h2>
+            </div>
+            <div class="col col-lg-10" style="width:100%; margin-top:30px">
+
+              <button *ngFor="let skill of skills" type="button" class="btn btn-success" (click)="onRemoveSkill(skill)" style="margin:5px">
+                <b>{{skill.name}}:</b> &nbsp; {{skill.count}} &nbsp; &nbsp;
+                <b>&#x2716;</b>
+              </button>
+
+            </div>
+
+            <div class="col col-lg-12 text-center " style="margin-top:50px; margin-bottom:25px">
+              <button type="button" class="btn btn-primary" (click)="onAddDefault(project)">Add as Schedule</button>
+            </div>
+          </div>
+          <hr>
+        </div>
+
+        <div class="col col-lg-12">
+          <h2>Calendar</h2>
+        </div>
+
+
+        <div class="col col-lg-12">
+          <ul style="margin-top:50px">
+            <li *ngFor="let year of newProject.calendar" class="card text-center">
+              <h4 class="card-title">
+                {{year.id}}
+                <hr>
+              </h4>
+              <div *ngFor="let week of year.weeks" class="text-center">
+                <div *ngIf="week.required > 0" class="row">
+                  <div class="col col-lg-2">
+                    <h4 class="card-title">
+                      Week: {{week.id}}
+                    </h4>
+                  </div>
+                  <div class="col col-lg-2">
+                    Current: {{week.current}}
+                  </div>
+                  <div class="col col-lg-2">
+                    Max: {{week.required}}
+                  </div>
+                  <div class="col col-lg-6">
+
+                    <button *ngFor="let skill of week.skills" type="button" class="btn btn-secondary" style="margin:5px">
+                      <b>{{skill.name}}:</b> &nbsp; {{skill.count}} &nbsp; &nbsp;
+
+                    </button>
+
+                  </div>
+                </div>
+                <hr *ngIf="week.required > 0">
+              </div>
+            </li>
+          </ul>
+
+        </div>
+
+      </div>
+    </div>
+    <button type="submit " class="btn btn-success" (click)="onAddProject()">Submit</button>
+  </form>
+  <hr>
+  <h2>Projects:</h2>
+  <div class="container">
+    <div class="row " style="margin-left:150px">
+      <div class=" card col col-lg-5 " *ngFor=" let project of projects" style="margin: 25px">
+        <div class="card-block ">
+          <h4 class="card-title ">{{project.name}}</h4>
+        </div>
+        <ul class="list-group list-group-flush ">
+          <li class="list-group-item ">
+            <b>Project leader:</b> &nbsp;{{project.projectleader}}</li>
+          <li class="list-group-item ">
+            <b>Company: </b> &nbsp; {{project.company}}</li>
+          <li class="list-group-item ">
+            <b>Budget:</b> &nbsp; &#36;{{project.budget}}
+
+          </li>
+          <li class="list-group-item ">
+            <b>ID:</b> &nbsp; {{project.id}}</li>
+        </ul>
+        <div class="card-block text-center ">
+          <button class="btn btn-danger" (click)="onDelete(project)">
+            <b>Delete</b>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>

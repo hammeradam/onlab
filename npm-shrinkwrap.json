@@ -156,6 +156,11 @@
       "integrity": "sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=",
       "dev": true
     },
+    "angular-2-dropdown-multiselect": {
+      "version": "1.6.1",
+      "resolved": "https://registry.npmjs.org/angular-2-dropdown-multiselect/-/angular-2-dropdown-multiselect-1.6.1.tgz",
+      "integrity": "sha512-OMNHstthBDXMB4C+L4a3i9PHVGfQ9RddCEAXsc+ThVXngcbBGFn0BKyoInQYgrjPdJ+GLqWb8zF9fYc5Oba3nA=="
+    },
     "angular2-router-loader": {
       "version": "0.3.5",
       "resolved": "https://registry.npmjs.org/angular2-router-loader/-/angular2-router-loader-0.3.5.tgz",

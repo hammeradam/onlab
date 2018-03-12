@@ -1,0 +1,15 @@
+/* td li {
+  list-style-type: none;
+  text-align: left;
+} */
+
+/* table tr td {
+  position: relative;
+} */
+
+.inputSm {
+  width: 80px;
+  border: 2px solid #5cb85c;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}

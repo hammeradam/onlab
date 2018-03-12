@@ -1,0 +1,196 @@
+<div class="container">
+  <h1 class="text-center">Add New Resource</h1>
+  <br>
+  <form name="resourceForm">
+    <h2>Main details</h2>
+    <div class="form-group">
+      <div class="row">
+        <div class="col col-lg-4">
+          <label for="firstname">First Name</label>
+          <input [(ngModel)]="newResource.firstname" type="text" class="form-control" id="firstname" name="firstname" class="form-control"
+            required minlength="3" #firstname="ngModel">
+
+          <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="alert alert-danger">
+
+            <div *ngIf="firstname.errors.required">
+              First Name is required.
+            </div>
+            <div *ngIf="firstname.errors.minlength">
+              First Name must be at least 4 characters long.
+            </div>
+          </div>
+
+        </div>
+        <div class="col col-lg-4">
+          <label for="lastname">Last Name</label>
+          <input [(ngModel)]="newResource.lastname" type="text" class="form-control" id="lastname" name="lastname" class="form-control"
+            required minlength="3" #lastname="ngModel">
+
+          <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="alert alert-danger">
+
+            <div *ngIf="lastname.errors.required">
+              Last Name is required.
+            </div>
+            <div *ngIf="lastname.errors.minlength">
+              Last Name must be at least 4 characters long.
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4">
+          <label for="phone">Phone</label>
+          <input [(ngModel)]="newResource.phone" type="phone" class="form-control" id="phone" name="phone" class="form-control" required
+            minlength="10" #phone="ngModel">
+
+          <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="alert alert-danger">
+
+            <div *ngIf="phone.errors.required">
+              Phone number is required.
+            </div>
+            <div *ngIf="phone.errors.minlength">
+              Phone number must be at least 10 digits long.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col col-lg-4">
+          <label for="email">E-mail</label>
+          <input [(ngModel)]="newResource.email" type="text" class="form-control" id="email" name="email" class="form-control" required
+            minlength="10" #email="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+
+          <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+
+            <div class="md-errors-spacer" [hidden]="email.valid || email.untouched">
+              <div *ngIf="email.errors && email.errors.required">
+                Email is required
+              </div>
+              <div *ngIf="email.errors && email.errors.pattern">
+                Email is invalid
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4">
+          <label for="salary">Salary / week</label>
+          <input [(ngModel)]="newResource.salary" type="curr" class="form-control" id="salary" name="salary">
+        </div>
+        <div class="col col-lg-4">
+          <label for="company">Company</label>
+          <input [(ngModel)]="newResource.company" type="text" class="form-control" id="company" name="company">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="container" style="margin-bottom:50px; margin-top:50px">
+        <h2>Avalability</h2>
+        <div class="row">
+          <div class="col col-lg-3">
+            <label for="availablefrom">Available from week:</label>
+            <input [(ngModel)]="availablefrom" type="number" placeholder="First week" step="1" min="1" max="52" class="form-control"
+              id="availablefrom" name="availablefrom">
+            <!-- <select *ngFor="let number of weeknumbers" id="availablefrom" name="availablefrom">
+              <option value="number">{{number}}</option>
+            </select> -->
+            <div class="alert alert-danger" *ngIf="availablefrom >53">
+              Value should be between 1 and 52/53!
+            </div>
+          </div>
+          <div class="col col-lg-3">
+            <label for="availableto">Available until week:</label>
+            <input [(ngModel)]="availableto" type="number" placeholder="Last Week" step="1" min="1" max="52" class="form-control" id="availableto"
+              name="availableto">
+            <div class="alert alert-danger" *ngIf="availableto >53">
+              Value should be between 1 and 52/53!
+            </div>
+          </div>
+          <div class="col col-lg-3">
+            <label for="workinghours">Working hours per week</label>
+            <input [(ngModel)]="workinghours" type="number" placeholder="Hours per week" step="1" min="0" max="40" class="form-control"
+              id="workinghours" name="workinghours" value="">
+            <div class="alert alert-danger" *ngIf="workinghours >40">
+              Value should be between 0 and 40!
+            </div>
+          </div>
+          <div class="col col-lg-3">
+            <button class="btn btn-primary" (click)="onAddDefault()" style="margin-top:32px;margin-left: 40px">Add as default</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-lg-2">
+          </div>
+          <div class="col col-lg-8">
+            <ul class="heroes" style="margin-top:50px">
+              <li *ngFor="let year of newResource.calendar" class="card text-center">
+                <h4 class="card-title">
+                  {{year.id}}
+                  <hr>
+                </h4>
+                <div *ngFor="let week of year.weeks" class="text-center">
+                  <div *ngIf="week.max !==0" class="row">
+                    <div class="col col-lg-4">
+                      <h4 class="card-title">
+                        Week: {{week.id}}
+                      </h4>
+                    </div>
+                    <div class="col col-lg-4">
+                      Current: {{week.current}}
+                    </div>
+                    <div class="col col-lg-4">
+                      Max: {{week.max}}
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="col col-lg-2">
+
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+    <button (click)="addResource(resourceForm)" class=" text-center btn btn-success">Submit</button>
+  </form>
+  <div class="container">
+    <div class="row">
+      <div class="offset-lg-5">
+        <label>Select Skills:</label>
+        <ss-multiselect-dropdown [options]="myOptions" [(ngModel)]="optionsModel" (ngModelChange)="onChange($event)"></ss-multiselect-dropdown>
+      </div>
+    </div>
+  </div>
+  <hr>
+</div>
+
+<div class="container">
+  <h2>Projects:</h2>
+  <div class="row " style="margin-left:150px">
+    <div class=" card col col-lg-5 " *ngFor=" let resource of resources" style="margin: 25px">
+      <div class="card-block ">
+        <h4 class="card-title ">{{resource.firstname}} &nbsp; {{resource.lastname}}</h4>
+      </div>
+      <ul class="list-group list-group-flush ">
+        <li class="list-group-item ">
+          <b>E-mail:</b> &nbsp;{{resource.email}}</li>
+        <li class="list-group-item ">
+          <b>Phone: </b> &nbsp; {{resource.phone}}</li>
+        <li class="list-group-item ">
+          <b>Company:</b> &nbsp; {{resource.company}}
+        </li>
+        <li class="list-group-item ">
+          <b>ID:</b> &nbsp; {{resource.id}}</li>
+      </ul>
+      <div class="card-block text-center ">
+        <button class="btn btn-danger" (click)="onDelete(project)">
+          <b>Delete</b>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>

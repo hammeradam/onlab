@@ -13,7 +13,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './addresource.component.html',
   styleUrls: ['./addresource.component.css']
 })
-export class AddResourceComponent implements OnInit {
+export class AddresourceComponent implements OnInit {
   //static things
   resources = RESOURCES;
   calendar = CALENDAR;

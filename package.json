@@ -6,8 +6,8 @@
     "test": "karma start ClientApp/test/karma.conf.js"
   },
   "devDependencies": {
-    "@angular/cli": "1.7.3",
     "@angular/animations": "4.2.5",
+    "@angular/cli": "^1.7.3",
     "@angular/common": "4.2.5",
     "@angular/compiler": "4.2.5",
     "@angular/compiler-cli": "4.2.5",
@@ -31,6 +31,7 @@
     "chai": "4.0.2",
     "css": "2.2.1",
     "css-loader": "0.28.4",
+    "dragula": "^3.7.2",
     "es6-shim": "0.35.3",
     "event-source-polyfill": "0.0.9",
     "expose-loader": "0.7.3",

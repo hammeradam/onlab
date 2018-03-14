@@ -1,133 +1,132 @@
-<head>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-          crossorigin="anonymous">
-</head>
+<h1 class="row text-center">Resource Table</h1>
+<br />
 <div class="container">
-  <div class="row">
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Project name</th>
-          <th class="text-center" scope="col">Risk</th>
-          <th class="text-center" scope="col">Max [days]</th>
-          <th class="text-center" scope="col">Planned [days]</th>
-          <th class="text-center" scope="col">{{week}}. week</th>
-          <th class="text-center" scope="col">{{week + 1}}. week</th>
-          <th class="text-center" scope="col">{{week + 2}}. week</th>
-          <th class="text-center" scope="col">{{week + 3}}. week</th>
-        </tr>
-      </thead>
-      <tbody>
-        <ng-container *ngFor="let projectEl of projects; let i = index;">
-          <tr [ngClass]="setBackgroundColor(projectEl.plannedhours, sumWeekCounts(projectEl))" (click)="toggleCollapse(i)">
-            <th scope="row">{{ projectEl.name }}
-              <i id="collapseIcon{{i}}" class="fa fa-arrow-down" aria-hidden="true"></i>
-            </th>
-            <td class="text-center">{{ projectEl.risk }}</td>
-            <td class="text-center">{{ projectEl.plannedhours }}</td>
-            <td class="text-center">{{ sumWeekCounts(projectEl) }}</td>
-            <td class="text-center">{{ sumSkillCounts(projectEl, 1) }}</td>
-            <td class="text-center">{{ sumSkillCounts(projectEl, 2) }}</td>
-            <td class="text-center">{{ sumSkillCounts(projectEl, 3) }}</td>
-            <td class="text-center">{{ sumSkillCounts(projectEl, 4) }}</td>
-          </tr>
-          <tr class="table" id="collapse{{i}}" style="display: none">
-            <td colspan="4">
-              <div>Project leader: {{ projectEl.projectleader }}</div>
-              <div>Start date: {{ projectEl.startdate }}</div>
-              <div>Due date: {{ projectEl.duedate }}</div>
-            </td>
-            <td>
-              <ng-container *ngFor="let skill of projects[i].calendar[0].weeks[this.week - 1].skills; let j = index;">
-                <span>{{ skill.name }} </span>
-                <a (click)="decSkill(skill, projects[i].calendar[0].weeks[this.week - 1].skills);" class="badge badge-secondary pull-right">
-                  <i class="fa fa-minus" aria-hidden="true"></i>
-                </a>
-                <span class="badge badge-pill badge-primary pull-right">{{ skill.count }}</span>
-                <a (click)="incSkill(skill);" class="badge badge-secondary pull-right">
-                  <i class="fa fa-plus" aria-hidden="true"></i>
-                </a>
-                <br>
-              </ng-container>
-              <input class="inputSm" id="input{{i}}0" type="text">
-              <br>
-              <button (click)="addResource(projects[i].calendar[0].weeks[this.week - 1].skills, i, 0);" type="button" class="btn btn-primary btn-sm">
-                Add resource
-              </button>
-            </td>
-            <td>
-              <ng-container *ngFor="let skill of projects[i].calendar[0].weeks[this.week].skills; let j = index;">
-                <span>{{ skill.name }} </span>
-                <a (click)="decSkill(skill, projects[i].calendar[0].weeks[this.week].skills);" class="badge badge-secondary pull-right">
-                  <i class="fa fa-minus" aria-hidden="true"></i>
-                </a>
-                <span class="badge badge-pill badge-primary pull-right">{{ skill.count }}</span>
-                <a (click)="incSkill(skill);" class="badge badge-secondary pull-right">
-                  <i class="fa fa-plus" aria-hidden="true"></i>
-                </a>
-                <br>
-              </ng-container>
-              <input class="inputSm" id="input{{i}}1" type="text">
-              <br>
-              <button (click)="addResource(projects[i].calendar[0].weeks[this.week].skills, i, 1);" type="button" class="btn btn-primary btn-sm">
-                Add resource
-              </button>
-            </td>
-            <td>
-              <ng-container *ngFor="let skill of projects[i].calendar[0].weeks[this.week + 1].skills; let j = index;">
-                <span>{{ skill.name }} </span>
-                <a (click)="decSkill(skill, projects[i].calendar[0].weeks[this.week + 1].skills);" class="badge badge-secondary pull-right">
-                  <i class="fa fa-minus" aria-hidden="true"></i>
-                </a>
-                <span class="badge badge-pill badge-primary pull-right">{{ skill.count }}</span>
-                <a (click)="incSkill(skill);" class="badge badge-secondary pull-right">
-                  <i class="fa fa-plus" aria-hidden="true"></i>
-                </a>
-                <br>
-              </ng-container>
-              <input class="inputSm" id="input{{i}}2" type="text">
-              <br>
-              <button (click)="addResource(projects[i].calendar[0].weeks[this.week + 1].skills, i, 2);" type="button" class="btn btn-primary btn-sm">
-                Add resource
-              </button>
-            </td>
-            <td>
-              <ng-container *ngFor="let skill of projects[i].calendar[0].weeks[this.week + 2].skills; let j = index;">
-                <span>{{ skill.name }} </span>
-                <a (click)="decSkill(skill, projects[i].calendar[0].weeks[this.week + 2].skills);" class="badge badge-secondary pull-right">
-                  <i class="fa fa-minus" aria-hidden="true"></i>
-                </a>
-                <span class="badge badge-pill badge-primary pull-right">{{ skill.count }}</span>
-                <a (click)="incSkill(skill);" class="badge badge-secondary pull-right">
-                  <i class="fa fa-plus" aria-hidden="true"></i>
-                </a>
-                <br>
-              </ng-container>
-              <input class="inputSm" id="input{{i}}3" type="text">
-              <br>
-              <button (click)="addResource(projects[i].calendar[0].weeks[this.week + 2].skills, i, 3);" type="button" class="btn btn-primary btn-sm">
-                Add resource
-              </button>
-            </td>
-          </tr>
-        </ng-container>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="row">
-    <button class="btn btn-success col-lg-1" (click)="decWeek();">Previous</button>
-    <span class="col-lg-3"></span>
-    <div class="col-lg-4">
-      <div class="input-group">
-          <span class="input-group-addon">Go to week:</span>
-        <input type="number" class="form-control weekInput" placeholder="0" id="weekInput" aria-label="Number">
-        <span class="input-group-btn">
-          <button class="btn btn-secondary" type="button" (click)="goToWeek();">Go!</button>
-        </span>
-      </div>
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Project name</th>
+                    <th class="text-center" scope="col">Risk</th>
+                    <th class="text-center" scope="col">Max [days]</th>
+                    <th class="text-center" scope="col">Planned [days]</th>
+                    <th class="text-center" scope="col">{{week}}. week</th>
+                    <th class="text-center" scope="col">{{week + 1}}. week</th>
+                    <th class="text-center" scope="col">{{week + 2}}. week</th>
+                    <th class="text-center" scope="col">{{week + 3}}. week</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let projectEl of projects; let i = index;">
+                    <tr [ngClass]="setBackgroundColor(projectEl.plannedhours, sumWeekCounts(projectEl))" (click)="toggleCollapse(i)">
+                        <th scope="row">
+                            {{ projectEl.name }}
+                            <i id="collapseIcon{{i}}" class="fa fa-arrow-down" aria-hidden="true"></i>
+                        </th>
+                        <td class="text-center">{{ projectEl.risk }}</td>
+                        <td class="text-center">{{ projectEl.plannedhours }}</td>
+                        <td class="text-center">{{ sumWeekCounts(projectEl) }}</td>
+                        <td class="text-center">{{ sumSkillCounts(projectEl, 1) }}</td>
+                        <td class="text-center">{{ sumSkillCounts(projectEl, 2) }}</td>
+                        <td class="text-center">{{ sumSkillCounts(projectEl, 3) }}</td>
+                        <td class="text-center">{{ sumSkillCounts(projectEl, 4) }}</td>
+                    </tr>
+                    <tr class="table" id="collapse{{i}}" style="display: none">
+                        <td colspan="4">
+                            <div>Project leader: {{ projectEl.projectleader }}</div>
+                            <div>Start date: {{ projectEl.startdate }}</div>
+                            <div>Due date: {{ projectEl.duedate }}</div>
+                        </td>
+                        <td>
+                            <ng-container *ngFor="let skill of projects[i].calendar[0].weeks[this.week - 1].skills; let j = index;">
+                                <span>{{ skill.name }} </span>
+                                <a (click)="decSkill(skill, projects[i].calendar[0].weeks[this.week - 1].skills);" class="badge badge-secondary pull-right">
+                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                </a>
+                                <span class="badge badge-pill badge-primary pull-right">{{ skill.count }}</span>
+                                <a (click)="incSkill(skill);" class="badge badge-secondary pull-right">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </a>
+                                <br>
+                            </ng-container>
+                            <input class="inputSm" id="input{{i}}0" type="text">
+                            <br>
+                            <button (click)="addResource(projects[i].calendar[0].weeks[this.week - 1].skills, i, 0);" type="button" class="btn btn-primary btn-sm">
+                                Add resource
+                            </button>
+                        </td>
+                        <td>
+                            <ng-container *ngFor="let skill of projects[i].calendar[0].weeks[this.week].skills; let j = index;">
+                                <span>{{ skill.name }} </span>
+                                <a (click)="decSkill(skill, projects[i].calendar[0].weeks[this.week].skills);" class="badge badge-secondary pull-right">
+                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                </a>
+                                <span class="badge badge-pill badge-primary pull-right">{{ skill.count }}</span>
+                                <a (click)="incSkill(skill);" class="badge badge-secondary pull-right">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </a>
+                                <br>
+                            </ng-container>
+                            <input class="inputSm" id="input{{i}}1" type="text">
+                            <br>
+                            <button (click)="addResource(projects[i].calendar[0].weeks[this.week].skills, i, 1);" type="button" class="btn btn-primary btn-sm">
+                                Add resource
+                            </button>
+                        </td>
+                        <td>
+                            <ng-container *ngFor="let skill of projects[i].calendar[0].weeks[this.week + 1].skills; let j = index;">
+                                <span>{{ skill.name }} </span>
+                                <a (click)="decSkill(skill, projects[i].calendar[0].weeks[this.week + 1].skills);" class="badge badge-secondary pull-right">
+                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                </a>
+                                <span class="badge badge-pill badge-primary pull-right">{{ skill.count }}</span>
+                                <a (click)="incSkill(skill);" class="badge badge-secondary pull-right">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </a>
+                                <br>
+                            </ng-container>
+                            <input class="inputSm" id="input{{i}}2" type="text">
+                            <br>
+                            <button (click)="addResource(projects[i].calendar[0].weeks[this.week + 1].skills, i, 2);" type="button" class="btn btn-primary btn-sm">
+                                Add resource
+                            </button>
+                        </td>
+                        <td>
+                            <ng-container *ngFor="let skill of projects[i].calendar[0].weeks[this.week + 2].skills; let j = index;">
+                                <span>{{ skill.name }} </span>
+                                <a (click)="decSkill(skill, projects[i].calendar[0].weeks[this.week + 2].skills);" class="badge badge-secondary pull-right">
+                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                </a>
+                                <span class="badge badge-pill badge-primary pull-right">{{ skill.count }}</span>
+                                <a (click)="incSkill(skill);" class="badge badge-secondary pull-right">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </a>
+                                <br>
+                            </ng-container>
+                            <input class="inputSm" id="input{{i}}3" type="text">
+                            <br>
+                            <button (click)="addResource(projects[i].calendar[0].weeks[this.week + 2].skills, i, 3);" type="button" class="btn btn-primary btn-sm">
+                                Add resource
+                            </button>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
     </div>
-    <span class="col-lg-3"></span>
-    <button class="btn btn-success pull-right col-lg-1" (click)="incWeek();">Next</button>
-  </div>
+
+    <div class="row">
+        <button class="btn btn-success col-lg-1" (click)="decWeek();">Previous</button>
+        <span class="col-lg-3"></span>
+        <div class="col-lg-4">
+            <div class="input-group">
+                <span class="input-group-addon">Go to week:</span>
+                <input type="number" class="form-control weekInput" placeholder="0" id="weekInput" aria-label="Number">
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" type="button" (click)="goToWeek();">Go!</button>
+                </span>
+            </div>
+        </div>
+        <span class="col-lg-3"></span>
+        <button class="btn btn-success pull-right col-lg-1" (click)="incWeek();">Next</button>
+    </div>
 </div>

@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 
 // import
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
-import { DragulaModule } from 'dragula';
 
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
@@ -15,7 +14,6 @@ import { ResourceTableComponent } from './components/resource-table/resource-tab
 import { ProjectTableComponent } from './components/project-table/project-table.component';
 import { AddProjectComponent } from './components/addproject/addproject.component';
 import { AddresourceComponent } from './components/addresource/addresource.component';
-import { DragNdropComponent } from './components/dragNdrop/dragNdrop.component';
 
 @NgModule({
     declarations: [
@@ -26,10 +24,8 @@ import { DragNdropComponent } from './components/dragNdrop/dragNdrop.component';
         ProjectTableComponent,
         AddProjectComponent,
         AddresourceComponent,
-        DragNdropComponent
     ],
     imports: [
-        //DragulaModule,
         MultiselectDropdownModule,
         CommonModule,
         HttpModule,
@@ -41,7 +37,6 @@ import { DragNdropComponent } from './components/dragNdrop/dragNdrop.component';
             { path: 'addproject', component: AddProjectComponent },
             { path: 'addresource', component: AddresourceComponent },
             { path: 'fetch-data', component: FetchDataComponent },
-            { path: 'dragNdrop', component: DragNdropComponent },
             { path: '**', redirectTo: 'home' },
         ])
     ]

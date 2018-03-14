@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    // maybe
+    // Enabling the previous components to be used
     "strictNullChecks": false,
     "noImplicitAny": false,
 
